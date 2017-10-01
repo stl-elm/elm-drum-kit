@@ -5,7 +5,7 @@ import Html.Attributes exposing (attribute, class, src)
 
 
 type alias Key =
-    { data : Int
+    { charCode : Int
     , keyName : String
     , sound : String
     }
@@ -29,7 +29,7 @@ keyDiv : Key -> Html msg
 keyDiv key =
     div
         [ class "key"
-        , attribute "data-key" (toString key.data)
+        , attribute "data-key" (toString key.charCode)
         ]
         [ kbd [] [ text key.keyName ]
         , span [ class "sound" ] [ text key.sound ]
@@ -39,7 +39,7 @@ keyDiv key =
 audioEl : Key -> Html msg
 audioEl key =
     audio
-        [ attribute "data-key" (toString key.data)
+        [ attribute "data-key" (toString key.charCode)
         , src ("sounds/" ++ key.sound ++ ".wav")
         ]
         []
