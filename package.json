@@ -1,0 +1,25 @@
+{
+  "name": "01_elm-drum-kit",
+  "version": "1.0.0",
+  "description": "A drumkit written in elm",
+  "main": "elm.js",
+  "scripts": {
+    "start": "elm-live Main.elm --output=elm.js --open"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/haasDev/elm-drum-kit.git"
+  },
+  "keywords": [
+    "elm"
+  ],
+  "author": "Tyler Haas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/haasDev/elm-drum-kit/issues"
+  },
+  "homepage": "https://github.com/haasDev/elm-drum-kit#readme",
+  "dependencies": {
+    "elm-live": "^2.7.5"
+  }
+}
