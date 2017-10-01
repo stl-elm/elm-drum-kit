@@ -1,7 +1,7 @@
 module Main exposing (..)
 
-import Html exposing (Html, div, kbd, program, span, text)
-import Html.Attributes exposing (attribute, class)
+import Html exposing (Html, audio, div, kbd, program, span, text)
+import Html.Attributes exposing (attribute, class, src)
 
 
 type alias Key =
@@ -36,15 +36,28 @@ keyDiv key =
         ]
 
 
+audioEl : Key -> Html msg
+audioEl key =
+    audio
+        [ attribute "data-key" (toString key.data)
+        , src ("sounds/" ++ key.sound ++ ".wav")
+        ]
+        []
+
+
 view : List Key -> Html msg
 view model =
-    div [ class "keys" ]
-        (List.map
-            keyDiv
-            model
-        )
+    div [ class "main" ]
+        [ div
+            [ class "keys" ]
+            (List.map keyDiv model)
+        , div
+            [ class "audio-files" ]
+            (List.map audioEl model)
+        ]
 
 
+main : Html msg
 main =
     -- program
     --     { init = init
