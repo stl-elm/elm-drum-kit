@@ -59,10 +59,4 @@ view model =
 
 main : Html msg
 main =
-    -- program
-    --     { init = init
-    --     , update = update
-    --     , subscriptions = always Sub.none
-    --     , view = view
-    --     }
     view init
