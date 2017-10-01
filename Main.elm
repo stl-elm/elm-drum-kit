@@ -4,6 +4,9 @@ import Html exposing (Html, audio, div, kbd, program, span, text)
 import Html.Attributes exposing (attribute, class, src)
 
 
+-- MODEL
+
+
 type alias Key =
     { charCode : Int
     , keyName : String
@@ -11,8 +14,8 @@ type alias Key =
     }
 
 
-init : List Key
-init =
+initialModel : List Key
+initialModel =
     [ Key 65 "A" "clap"
     , Key 83 "S" "hihat"
     , Key 68 "D" "kick"
@@ -23,6 +26,10 @@ init =
     , Key 75 "K" "tom"
     , Key 76 "L" "tink"
     ]
+
+
+
+-- VIEW
 
 
 keyDiv : Key -> Html msg
@@ -57,6 +64,26 @@ view model =
         ]
 
 
-main : Html msg
+
+-- UPDATE
+
+
+update : List Key -> msg -> ( List Key, Cmd msg )
+update keys msg =
+    case msg of
+        _ ->
+            keys ! []
+
+
+
+-- MAIN
+
+
+main : Program Never (List Key) (List Key)
 main =
-    view init
+    program
+        { init = ( initialModel, Cmd.none )
+        , view = view
+        , update = update
+        , subscriptions = always Sub.none
+        }
