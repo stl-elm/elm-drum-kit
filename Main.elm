@@ -1,7 +1,8 @@
 module Main exposing (..)
 
-import Html exposing (Html, audio, div, kbd, program, span, text)
+import Html exposing (Html, audio, div, kbd, program, span, sub, text)
 import Html.Attributes exposing (attribute, class, src)
+import Keyboard
 
 
 -- MODEL
@@ -14,7 +15,11 @@ type alias Key =
     }
 
 
-initialModel : List Key
+type alias Model =
+    List Key
+
+
+initialModel : Model
 initialModel =
     [ Key 65 "A" "clap"
     , Key 83 "S" "hihat"
@@ -29,10 +34,18 @@ initialModel =
 
 
 
+-- MESSAGES
+
+
+type Msg
+    = KeyMsg Keyboard.KeyCode
+
+
+
 -- VIEW
 
 
-keyDiv : Key -> Html msg
+keyDiv : Key -> Html Msg
 keyDiv key =
     div
         [ class "key"
@@ -43,7 +56,7 @@ keyDiv key =
         ]
 
 
-audioEl : Key -> Html msg
+audioEl : Key -> Html Msg
 audioEl key =
     audio
         [ attribute "data-key" (toString key.charCode)
@@ -52,7 +65,7 @@ audioEl key =
         []
 
 
-view : List Key -> Html msg
+view : Model -> Html Msg
 view model =
     div [ class "main" ]
         [ div
@@ -68,22 +81,31 @@ view model =
 -- UPDATE
 
 
-update : List Key -> msg -> ( List Key, Cmd msg )
-update keys msg =
+update : Msg -> Model -> ( Model, Cmd Msg )
+update msg model =
     case msg of
         _ ->
-            keys ! []
+            model ! []
+
+
+
+-- SUBSCRIPTIONS
+
+
+subscriptions : Model -> Sub Msg
+subscriptions model =
+    Sub.batch [ Keyboard.downs KeyMsg ]
 
 
 
 -- MAIN
 
 
-main : Program Never (List Key) (List Key)
+main : Program Never Model Msg
 main =
     program
         { init = ( initialModel, Cmd.none )
         , view = view
         , update = update
-        , subscriptions = always Sub.none
+        , subscriptions = subscriptions
         }
